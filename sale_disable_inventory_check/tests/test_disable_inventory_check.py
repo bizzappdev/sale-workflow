@@ -12,7 +12,7 @@ class TestDisableInventoryCheck(common.TransactionCase):
         self.product_1 = self.env['product.product'].create({
             'name': 'Product 1',
             'type': 'product',
-            'uom_id': self.env.ref('product.product_uom_unit').id,
+            'uom_id': self.env.ref('uom.product_uom_unit').id,
         })
 
     def test_disable_inventory_check(self):
