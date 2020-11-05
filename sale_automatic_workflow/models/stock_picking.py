@@ -14,7 +14,6 @@ class StockPicking(models.Model):
         comodel_name="sale.workflow.process", string="Sale Workflow Process"
     )
 
-    @api.multi
     def validate_picking(self):
         """Set quantities automatically and validate the pickings."""
         for picking in self:

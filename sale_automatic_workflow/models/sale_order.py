@@ -62,7 +62,6 @@ class SaleOrder(models.Model):
                        'message': workflow.warning}
             return {'warning': warning}
 
-    @api.multi
     def action_invoice_create(self, grouped=False, final=False):
         for order in self:
             if not order.workflow_process_id.invoice_service_delivery:
