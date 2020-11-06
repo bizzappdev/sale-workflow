@@ -83,7 +83,7 @@ class AutomaticWorkflowJob(models.Model):
 
     @api.model
     def _validate_invoices(self, validate_invoice_filter):
-        invoice_obj = self.env['account.invoice']
+        invoice_obj = self.env['account.move']
         invoices = invoice_obj.search(validate_invoice_filter)
         _logger.debug('Invoices to validate: %s', invoices.ids)
         for invoice in invoices:
