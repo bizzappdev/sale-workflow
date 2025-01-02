@@ -14,3 +14,12 @@ class SaleOrder(models.Model):
         """
         self.mapped("picking_ids").filtered(lambda r: r.state == "done").action_cancel()
         return super().action_cancel()
+
+    def _action_cancel(self):
+        """Inherited method to handle the case when the pickings of sale
+        orders are confirmed and attempting to cancel the sale orders from
+        the list view;this method raises a validation error."""
+        self.picking_ids.filtered(
+            lambda picking: picking.state == "done"
+        ).action_cancel()
+        return super()._action_cancel()
