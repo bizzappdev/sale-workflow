@@ -1,47 +1,18 @@
 import json
 
-from odoo.tests.common import TransactionCase
+from odoo.tests.common import TransactionCase, tagged
 
 
+@tagged("post_install", "-at_install")
 class TestSaleOrderPartnerDomains(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        Partner = cls.env["res.partner"]
-
-        # Create parent company (commercial partner)
-        cls.parent_partner = Partner.create(
-            {
-                "name": "Test Company",
-                "company_type": "company",
-            }
-        )
-        # Create child delivery and invoice contact
-        cls.delivery_contact = Partner.create(
-            {
-                "name": "Delivery Contact",
-                "parent_id": cls.parent_partner.id,
-                "type": "delivery",
-            }
-        )
-        cls.invoice_contact = Partner.create(
-            {
-                "name": "Invoice Contact",
-                "parent_id": cls.parent_partner.id,
-                "type": "invoice",
-            }
-        )
-
-        cls.unrelated_partner = Partner.create(
-            {
-                "name": "Unrelated Partner",
-            }
-        )
-        cls.sale_order = cls.env["sale.order"].create(
-            {
-                "partner_id": cls.parent_partner.id,
-            }
-        )
+        cls.parent_partner = cls.env.ref("base.res_partner_2")
+        cls.delivery_contact = cls.env.ref("base.res_partner_4")
+        cls.invoice_contact = cls.env.ref("base.res_partner_address_7")
+        cls.partner = cls.env.ref("base.res_partner_3")
+        cls.sale_order = cls.env.ref("sale.sale_order_2")
 
     def test_01_shipping_and_invoice_domain(self):
         """Test that shipping/invoice partner domain only includes child_of
@@ -66,12 +37,12 @@ class TestSaleOrderPartnerDomains(TransactionCase):
             "Invoice contact not in invoice domain",
         )
         self.assertNotIn(
-            self.unrelated_partner,
+            self.partner,
             shipping_partners,
             "Unrelated partner in shipping domain",
         )
         self.assertNotIn(
-            self.unrelated_partner,
+            self.partner,
             invoice_partners,
             "Unrelated partner in invoice domain",
         )
