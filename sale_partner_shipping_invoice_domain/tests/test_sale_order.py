@@ -39,10 +39,10 @@ class TestSaleOrderPartnerDomains(TransactionCase):
         self.assertNotIn(
             self.partner,
             shipping_partners,
-            "Unrelated partner in shipping domain",
+            "Invalid shipping partner included",
         )
         self.assertNotIn(
             self.partner,
             invoice_partners,
-            "Unrelated partner in invoice domain",
+            "Invalid invoice partner included",
         )
