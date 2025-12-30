@@ -90,6 +90,33 @@ class TestSaleInvoicePlan(common.TestSaleCommon):
                 .id,
             }
         )
+        # Create an empty SO for Service
+        cls.so_service_empty = sale_obj.with_user(
+            cls.company_data["default_user_salesman"]
+        ).create(
+            {
+                "partner_id": cls.partner_customer_usd.id,
+                "partner_invoice_id": cls.partner_customer_usd.id,
+                "partner_shipping_id": cls.partner_customer_usd.id,
+                "use_invoice_plan": True,
+                "order_line": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": cls.product_order.name,
+                            "product_id": cls.product_order.id,
+                            "product_uom_qty": 0,
+                            "product_uom": cls.product_order.uom_id.id,
+                            "price_unit": cls.product_order.list_price,
+                        },
+                    )
+                ],
+                "pricelist_id": cls.env["product.pricelist"]
+                .browse(cls.env.context.get("pricelist"))
+                .id,
+            }
+        )
 
     @classmethod
     def setUpClassicProducts(cls):
@@ -319,3 +346,23 @@ class TestSaleInvoicePlan(common.TestSaleCommon):
         self.so_service.invoice_plan_ids._compute_amount()
         self.assertEqual(first_install.amount, 280.0)
         self.assertEqual(first_install.percent, 9.090909)
+
+    def test_compute_amount_zero_untaxed(self):
+        """
+        Test that invoice plan with 0 untaxed amount on SO
+        results in 0 amount on each installment
+        """
+        ctx = {
+            "active_id": self.so_service_empty.id,
+            "active_ids": [self.so_service_empty.id],
+        }
+        f = Form(self.env["sale.create.invoice.plan"])
+        # Create Invoice Plan 3 installment
+        num_installment = 3
+        f.num_installment = num_installment
+        plan_zero_wizard = f.save()
+        plan_zero_wizard.with_context(**ctx).sale_create_invoice_plan()
+        for plan_zero in self.so_service_empty.invoice_plan_ids:
+            self.assertEqual(
+                plan_zero.amount, 0, "Amount should not be computed if untaxed is zero"
+            )

@@ -52,18 +52,16 @@ Invoice Plan"
 Usage
 =====
 
--  Create new sales quotation as per normal process
--  Select option "Use Invoice Plan", a new Invoice Plan tab will appear
--  Click on "=> Create Invoice Plan" link to open invoice planning
-   wizard
--  Do plan for number of installment and/or advance, start date and
-   interval
--  Double check that each advance/installment has correct plan
-   percentage
--  After confirm sales order, now we have new option to "Create Invoice
-   by Plan"
--  User can create only next invoice, or create all the rest invoices at
-   the same time
+- Create new sales quotation as per normal process
+- Select option "Use Invoice Plan", a new Invoice Plan tab will appear
+- Click on "=> Create Invoice Plan" link to open invoice planning wizard
+- Do plan for number of installment and/or advance, start date and
+  interval
+- Double check that each advance/installment has correct plan percentage
+- After confirm sales order, now we have new option to "Create Invoice
+  by Plan"
+- User can create only next invoice, or create all the rest invoices at
+  the same time
 
 Changelog
 =========
@@ -71,14 +69,12 @@ Changelog
 15.0.1.1.0 (2022-05-10)
 -----------------------
 
--  remove dependency on stock
-
-.. _section-1:
+- remove dependency on stock
 
 12.0.1.0.0 (2019-03-08)
 -----------------------
 
--  Start of the history
+- Start of the history
 
 Bug Tracker
 ===========
@@ -101,12 +97,11 @@ Authors
 Contributors
 ------------
 
--  Kitti Upariphutthiphong. <kittiu@gmail.com>
-   (`http://ecosoft.co.th <http://ecosoft.co.th>`__)
+- Kitti Upariphutthiphong. <kittiu@gmail.com> (http://ecosoft.co.th)
 
--  `Trobz <https://trobz.com>`__:
+- `Trobz <https://trobz.com>`__:
 
-      -  Son Ho <sonhd@trobz.com>
+     - Son Ho <sonhd@trobz.com>
 
 Other credits
 -------------
